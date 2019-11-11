@@ -1,5 +1,5 @@
 import React from 'react'
-import {FaUserFriends, FaFighterJet, FaTrophy, FaUser} from 'react-icons/fa'
+import {FaUserFriends, FaFighterJet, FaTrophy, FaUser, FaTimesCircle} from 'react-icons/fa'
 import PropTypes from 'prop-types'
 
 function Instructions(){
@@ -35,7 +35,9 @@ class PlayerInput extends React.Component{
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
+
         this.handleChange = this.handleChange.bind(this)
+        
     }
 
     handleSubmit(event){
@@ -43,6 +45,8 @@ class PlayerInput extends React.Component{
 
         this.props.onSubmit(this.state.username)
     }
+
+
 
     handleChange(event){
         this.setState({
@@ -83,6 +87,38 @@ PlayerInput.propTypes ={
     label: PropTypes.string.isRequired
 }
 
+function PlayerPreview({username, onReset, label}){
+    return(
+        <div className="column player div">
+            <h3 className="player-label h3">{label}</h3>
+            <div className="row bg-light div">
+                <div className="player-info div">
+                    <img 
+                        src={`https://github.com/${username}.png?size=200`}
+                        alt={`Avatar for ${username}`}
+                        className="avatar-small"
+                    />
+                    <a
+                        href={`https://github.com.${username}`}
+                        className='link'
+                    >
+                        {username}
+                    </a>
+                </div>
+                <button className="btn-clear flex-center button" onClick={onReset}>
+                    <FaTimesCircle color='rgb(194,54,42)' size={26} />
+                </button>
+            </div>
+        </div>
+    )
+}
+
+PlayerPreview.propTypes = {
+    username: PropTypes.string.isRequired,
+    onReset: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired
+}
+
 export default class Battle extends React.Component{
     constructor(props){
         super(props)
@@ -93,11 +129,18 @@ export default class Battle extends React.Component{
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleReset = this.handleReset.bind(this)
     }
 
     handleSubmit(id, player){
         this.setState({
             [id]: player
+        })
+    }
+
+    handleReset(id){
+        this.setState({
+            [id]: null
         })
     }
 
@@ -111,23 +154,31 @@ export default class Battle extends React.Component{
                 <div className="players-container div">
                     <h1 className="center-text header-lg h1">Players</h1>
                     <div className="row space-around div">
-                        {playerOne === null && (
-                            <PlayerInput 
+                        {playerOne === null 
+                            ?<PlayerInput 
                                 label="Player One" 
                                 onSubmit={(player) => this.handleSubmit('playerOne',player)} 
                             />
-                        )}
+                            :<PlayerPreview 
+                                username={playerOne} 
+                                label='Player One' 
+                                onReset={() => this.handleReset('playerOne')}
+                            />
+                        }
 
-                        {playerTwo === null && (
-                            <PlayerInput 
+                        {playerTwo === null 
+                            ?<PlayerInput 
                                 label="Player Two" 
                                 onSubmit={(player) => this.handleSubmit('playerTwo',player)} 
                             />
-                        )}
+                            :<PlayerPreview 
+                                username={playerTwo} 
+                                label='Player Two' 
+                                onReset={() => this.handleReset('playerTwo')}
+                            />
+                        }
                     </div>
-                </div>
-
-                
+                </div>                
             </React.Fragment>
         )
     }
