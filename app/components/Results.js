@@ -1,5 +1,7 @@
 import React from 'react'
 import {battle} from '../utils/api'
+import { FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaCode, FaUser} from 'react-icons/fa'
+
 
 export default class Results extends React.Component{
     constructor(props){
@@ -34,10 +36,65 @@ export default class Results extends React.Component{
 
 
     render(){
+        const { winner, loser, error, loading} = this.state
+        if(loading === true){
+            return <p>Loading</p>
+        }
+
+        if(error){
+            return (
+                <p className="center-text error">{error}</p>
+            )
+        }
+
         return(
-            <div>
-                Results
-                <pre>{JSON.stringify(this.state, null, 2)}</pre>
+            <div className= 'grid space-around container-sm'>
+                <div className="div card bg-light">
+                    <h4 className="header-lg center-text h4">
+                        {winnder.score === loser.score ? 'Tie' : "Winner"}
+                    </h4>
+                    <img 
+                        src="{winner.profile.avatar_url" 
+                        alt={`Avatar for ${winner.profile.login}`} 
+                        className="avatar"/>
+                    <h2 className="center-text h2">
+                        <a className='link' href={winner.propfile.html_url}>
+                            {winner.profile.login}
+                        </a>
+                    </h2>
+                    <ul className="card-list ul">
+                        <li>
+                            <FaUser color='rgb(239,115,115)' size={22} />
+                            {winner.profile.name}
+                        </li>
+                        {winner.profile.location && (
+                            <li>
+                                <FaCompass color='rgb(144,115,255)' size={22} />
+                                {winner.profile.location}
+                            </li>
+                        )}
+                        {winner.profile.company && (
+                            <li>
+                                <FaBriefcase color='rgb(144,115,255)' size={22} />
+                                {winner.profile.company}
+                            </li>
+                        )}
+                    </ul>
+                </div>
+                <div className="div card bg-light">
+                    <h4 className='header-lg center-text h4'>
+                        {winnder.score === loser.score ? 'Tie' : "Loser"}
+                    </h4>
+                    <img 
+                        src="{loser.profile.avatar_url" 
+                        alt={`Avatar for ${loser.profile.login}`} 
+                        className="avatar"/>
+                    <h2 className="center-text h2">
+                        <a className='link' href={loser.propfile.html_url}>
+                            {loser.profile.login}
+                        </a>
+                    </h2>
+                </div>
             </div>
         )
     }
