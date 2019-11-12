@@ -51,14 +51,17 @@ export default class Results extends React.Component{
             <div className= 'grid space-around container-sm'>
                 <div className="div card bg-light">
                     <h4 className="header-lg center-text h4">
-                        {winnder.score === loser.score ? 'Tie' : "Winner"}
+                        {winner.score === loser.score ? 'Tie' : "Winner"}
                     </h4>
                     <img 
-                        src="{winner.profile.avatar_url" 
+                        src={winner.profile.avatar_url}
                         alt={`Avatar for ${winner.profile.login}`} 
                         className="avatar"/>
+                    <h4 className="center-text h4">
+                        Score: {winner.score.toLocaleString()}
+                    </h4>
                     <h2 className="center-text h2">
-                        <a className='link' href={winner.propfile.html_url}>
+                        <a className='link' href={winner.profile.html_url}>
                             {winner.profile.login}
                         </a>
                     </h2>
@@ -75,25 +78,63 @@ export default class Results extends React.Component{
                         )}
                         {winner.profile.company && (
                             <li>
-                                <FaBriefcase color='rgb(144,115,255)' size={22} />
+                                <FaBriefcase color='#795548' size={22} />
                                 {winner.profile.company}
                             </li>
                         )}
+                        <li>
+                            <FaUsers color='rgb(129,195,245)' size={22} />
+                            {winner.profile.followers.toLocaleString()} followers
+                        </li>
+                        <li>
+                            <FaUserFriends color='rgb(64,183,95)' size={22} />
+                            {winner.profile.following.toLocaleString()} following
+                        </li>
                     </ul>
                 </div>
                 <div className="div card bg-light">
-                    <h4 className='header-lg center-text h4'>
-                        {winnder.score === loser.score ? 'Tie' : "Loser"}
+                    <h4 className="header-lg center-text h4">
+                        {winner.score === loser.score ? 'Tie' : "Loser"}
                     </h4>
+                   
                     <img 
-                        src="{loser.profile.avatar_url" 
+                        src={loser.profile.avatar_url} 
                         alt={`Avatar for ${loser.profile.login}`} 
                         className="avatar"/>
+                    <h4 className="center-text h4">
+                        Score: {loser.score.toLocaleString()}
+                    </h4>
                     <h2 className="center-text h2">
-                        <a className='link' href={loser.propfile.html_url}>
+                        <a className='link' href={loser.profile.html_url}>
                             {loser.profile.login}
                         </a>
                     </h2>
+                    <ul className="card-list ul">
+                        <li>
+                            <FaUser color='rgb(239,115,115)' size={22} />
+                            {loser.profile.name}
+                        </li>
+                        {loser.profile.location && (
+                            <li>
+                                <FaCompass color='rgb(144,115,255)' size={22} />
+                                {loser.profile.location}
+                            </li>
+                        )}
+                        {loser.profile.company && (
+                            <li>
+                                <FaBriefcase color='#795548' size={22} />
+                                {loser.profile.company}
+                            </li>
+                        )}
+                        <li>
+                            <FaUsers color='rgb(129,195,245)' size={22} />
+                            {loser.profile.followers.toLocaleString()} followers
+                        </li>
+                        <li>
+                            <FaUserFriends color='rgb(64,183,95)' size={22} />
+                            {loser.profile.following.toLocaleString()} following
+                        </li>
+                    </ul>
                 </div>
             </div>
         )
