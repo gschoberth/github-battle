@@ -1,0 +1,37 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
+
+export default function Card({header, subheader, avatar, href, name, children }){
+    return(
+        <div className="card bg-light div">
+            <h4 className="header-lg center-text h4">
+                {header}
+            </h4>
+            
+            <img 
+                src={avatar} 
+                alt={`Avatar for ${name}`} 
+                className="avatar"/>
+            {subheader && (
+                <h4 className="center-text h4">
+                    {subheader}
+                </h4>
+            )}
+            <h2 className="center-text h2">
+                <a className='link' href={href}>
+                    {name}
+                </a>
+            </h2>
+            {children}
+        </div>
+    )
+}
+
+Card.propType = {
+    header: PropTypes.string.isRequired,
+    subheader: PropTypes.string,
+    avatar: PropTypes.string.isRequired,
+    href: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+}
